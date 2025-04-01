@@ -1,4 +1,7 @@
 yfinance
 pandas
-lxlm
+lxml
 apache-airflow
+playwright
+httpx
+requests
