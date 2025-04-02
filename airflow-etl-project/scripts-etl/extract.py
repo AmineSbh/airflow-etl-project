@@ -1,13 +1,12 @@
-from playwright.sync_api import sync_playwright
+from playwright.async_api import async_playwright
 from bs4 import BeautifulSoup
-
 import httpx
 import asyncio
-
 import requests
 import yfinance as yf
 import pandas as pd
 
+from load import load_to_postgresql
 
 ####################
 #                  #
@@ -49,49 +48,30 @@ class CompanyScraper:
         for company in companies:
             print(f"Nom: {company['name']}, Secteur: {company['sector']}")
 
-    def scrape_playwright(self):
-        """Méthode utilisant Playwright"""
-        with sync_playwright() as playwright:
-            # Lancement du navigateur
-            browser = playwright.chromium.launch(headless=True)
-            page = browser.new_page()
+    async def scrape_playwright(self):
+        """Méthode utilisant Playwright (version asynchrone)"""
+        async with async_playwright() as playwright:
+            browser = await playwright.chromium.launch(headless=True)
+            page = await browser.new_page()
 
             try:
-                # Navigation
-                url = "https://fr.wikipedia.org/wiki/CAC_40"
-                page.goto(url)
-
-                # Extraction du contenu
-                html_content = page.content()
+                await page.goto(self.url)
+                html_content = await page.content()
                 soup = BeautifulSoup(html_content, "html.parser")
-
-                # Recherche du tableau
                 table = soup.find("table", {"class": "wikitable"})
-
-                # Extraction des données
                 companies = self._parse_table(table)
-
                 return companies
-
             finally:
-                browser.close()
+                await browser.close()
 
     def scrape_requests(self):
         """Méthode utilisant Requests"""
         try:
-            # Envoi de la requête
-            response = requests.get(URL, headers=HEADERS)
+            response = requests.get(self.url, headers=self.headers)
             response.raise_for_status()
-
-            # Parsing du HTML
             soup = BeautifulSoup(response.text, "html.parser")
             table = soup.find("table", {"class": "wikitable"})
-
-            # Extraction des données
-            companies = self._parse_table(table)
-
-            return companies
-
+            return self._parse_table(table)
         except requests.RequestException as e:
             print(f"Erreur lors de la requête: {e}")
             return []
@@ -99,26 +79,12 @@ class CompanyScraper:
     async def scrape_httpx(self):
         """Méthode utilisant HTTPX"""
         try:
-            # Configuration de la requête
-            url = "https://fr.wikipedia.org/wiki/CAC_40"
-            headers = {
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-            }
-
-            # Envoi de la requête asynchrone
             async with httpx.AsyncClient() as client:
-                response = await client.get(url, headers=headers)
+                response = await client.get(self.url, headers=self.headers)
                 response.raise_for_status()
-
-                # Parsing du HTML
                 soup = BeautifulSoup(response.text, "html.parser")
                 table = soup.find("table", {"class": "wikitable"})
-
-                # Extraction des données
-                companies = companies = self._parse_table(table)
-
-                return companies
-
+                return self._parse_table(table)
         except httpx.RequestError as e:
             print(f"Erreur lors de la requête: {e}")
             return []
@@ -131,57 +97,95 @@ class CompanyScraper:
 ####################
 
 
-def get_stock_prices(companies):
+async def get_stock_prices(companies):
+    """Obtenir les prix des actions de manière asynchrone"""
     stock_data = []
 
     for company in companies:
-        # Obtenir le symbole Yahoo Finance (à adapter selon les entreprises)
-        ticker = yf.Ticker(f"{company['name']}.PA")  # .PA pour Paris
-
         try:
-            # Obtenir les données en direct
+            ticker = yf.Ticker(f"{company['name']}.PA")
             info = ticker.info
             stock_data.append(
                 {
                     "name": company["name"],
                     "price": info.get("regularMarketPrice", "N/A"),
                     "change": info.get("regularMarketChangePercent", "N/A"),
+                    # Ajoute le prix d'ouverture et une date a laquelle il a été pris
+                    "open": info.get("regularMarketOpen", "N/A"),
+                    # Ajoute une date a laquelle il a été pris
+                    "date": info.get("regularMarketTime", "N/A"),
                 }
             )
         except Exception as e:
             print(f"Erreur pour {company['name']}: {e}")
+            stock_data.append(
+                {
+                    "name": company["name"],
+                    "price": "N/A",
+                    "change": "N/A",
+                }
+            )
 
     return stock_data
 
 
-def main():
+def transform(data):
+    """Transformation des données en DataFrame"""
+    df = pd.DataFrame(data)
+    # Ajoutez ici vos transformations supplémentaires si nécessaire
+    return df
+
+
+async def main():
     """Fonction principale"""
     scraper = CompanyScraper()
 
-    # Test des différentes méthodes
-    print("\n=== Playwright ===")
-    companies = scraper.scrape_playwright()
-    # scraper.display_results(companies)
+    print("\n=== Scraping des entreprises du CAC 40 ===")
+    # Utiliser la méthode Playwright par défaut
+    companies = await scraper.scrape_playwright()
 
-    # print("\n=== Requests ===")
-    # companies = scraper.scrape_requests()
-    # scraper.display_results(companies)
+    if not companies:
+        print("Échec du scraping avec Playwright, tentative avec Requests...")
+        companies = scraper.scrape_requests()
 
-    # print("\n=== HTTPX ===")
-    # companies = asyncio.run(scraper.scrape_httpx())
-    # scraper.display_results(companies)
+    if not companies:
+        print("Échec du scraping avec Requests, tentative avec HTTPX...")
+        companies = await scraper.scrape_httpx()
 
-    # Bourse
-    # # Ensuite obtenir les cours
-    while 1:
-        stock_prices = get_stock_prices(companies)
+    if not companies:
+        print("Échec de toutes les méthodes de scraping. Arrêt du programme.")
+        return
 
-        # Afficher les résultats
-        for stock in stock_prices:
-            print(f"{stock['name']}: {stock['price']}€ ({stock['change']}%)")
+    print(f"\nSuivi des cours en temps réel pour {len(companies)} entreprises")
+    print("Mise à jour toutes les 10 secondes. Ctrl+C pour arrêter.\n")
 
-        asyncio.sleep(10)
+    try:
+        while True:
+            stock_prices = await get_stock_prices(companies)
+
+            # Transformation des données
+            transformed_data = transform(stock_prices)
+
+            # Chargement des données dans PostgreSQL
+            load_to_postgresql(transformed_data, "stock_prices")
+
+            # # Affichage des résultats
+            # print("\033[2J\033[H")  # Clear screen
+            # print(transformed_data)
+            # print("\nDétails des cours:")
+            # for stock in stock_prices:
+            #     if stock["price"] != "N/A":
+            #         print(f"{stock['name']}: {stock['price']}€ ({stock['change']}%)")
+            #     else:
+            #         print(f"{stock['name']}: Données non disponibles")
+
+            await asyncio.sleep(10)
+
+    except KeyboardInterrupt:
+        print("\nArrêt du programme...")
+    except Exception as e:
+        print(f"\nErreur inattendue: {e}")
 
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
