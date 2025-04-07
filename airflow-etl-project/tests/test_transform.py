@@ -1,7 +1,13 @@
 import pytest
 import pandas as pd
 from pandas.testing import assert_frame_equal
-from airflow_etl_project.scripts_etl.transform import transform
+import os
+import sys
+
+# Ajout du chemin du projet au PYTHONPATH
+# sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from scripts_etl.transform import *
 
 
 def test_transform_basic():

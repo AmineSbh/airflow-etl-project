@@ -12,7 +12,7 @@ def transform(dict_bourse: dict) -> pd.DataFrame:
         pd.DataFrame: DataFrame contenant les données du dictionnaire.
     """
     # Créer un DataFrame à partir du dictionnaire
-    df = pd.DataFrame(dict)
+    df = pd.DataFrame(dict_bourse)
 
     # Ajoute une colonne pour le prix d'ouverture
     df

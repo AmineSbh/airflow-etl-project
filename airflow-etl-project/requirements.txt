@@ -2,9 +2,16 @@ yfinance
 pandas
 lxml
 # apache-airflow
+os
+sys
 sqlalchemy
 psycopg2-binary
 playwright
 httpx
 requests
+
+#Test
 pytest
+pytest-asyncio
+pytest-mock
+requests-mock
