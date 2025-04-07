@@ -5,9 +5,8 @@ import os
 import sys
 
 # Ajout du chemin du projet au PYTHONPATH
-# sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-from scripts_etl.transform import *
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from scripts_etl.transform import transform
 
 
 def test_transform_basic():

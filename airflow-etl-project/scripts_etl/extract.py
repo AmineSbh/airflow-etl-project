@@ -6,9 +6,9 @@ import requests
 import yfinance as yf
 import pandas as pd
 
-from load import load_to_postgresql
+from scripts_etl.load import load_to_postgresql
 
-from transform import transform
+from scripts_etl.transform import transform
 
 ####################
 #                  #

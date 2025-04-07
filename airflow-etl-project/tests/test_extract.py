@@ -1,9 +1,6 @@
 import pytest
 from bs4 import BeautifulSoup
-import pandas as pd
-from playwright.async_api import async_playwright
-from scripts_etl.extract import CompanyScraper, get_stock_prices
-from unittest.mock import Mock, patch
+from scripts_etl.extract import CompanyScraper
 
 # Données de test
 SAMPLE_HTML = """
