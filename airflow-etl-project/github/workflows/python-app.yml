@@ -1,5 +1,5 @@
 # .github/workflows/python-app.yml
-name: Run tests on push
+name: Run tests on push 2
 
 on:
   push:
