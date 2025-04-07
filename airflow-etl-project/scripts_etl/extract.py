@@ -8,6 +8,8 @@ import pandas as pd
 
 from load import load_to_postgresql
 
+from transform import transform
+
 ####################
 #                  #
 # Classe scrapping #
@@ -127,13 +129,6 @@ async def get_stock_prices(companies):
             )
 
     return stock_data
-
-
-def transform(data):
-    """Transformation des données en DataFrame"""
-    df = pd.DataFrame(data)
-    # Ajoutez ici vos transformations supplémentaires si nécessaire
-    return df
 
 
 async def main():

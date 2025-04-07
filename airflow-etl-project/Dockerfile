@@ -10,5 +10,8 @@ COPY . .
 # Installer les dépendances
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Installer les navigateurs Playwright
+RUN playwright install --with-deps
+
 # Commande par défaut pour exécuter le script
 CMD ["python", "scripts-etl/extract.py"]

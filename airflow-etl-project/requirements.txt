@@ -1,0 +1,10 @@
+yfinance
+pandas
+lxml
+# apache-airflow
+sqlalchemy
+psycopg2-binary
+playwright
+httpx
+requests
+pytest
