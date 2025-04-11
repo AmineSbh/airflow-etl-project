@@ -1,0 +1,7 @@
+{
+    "python.testing.pytestArgs": [
+        "airflow-etl-project/tests/"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
+}

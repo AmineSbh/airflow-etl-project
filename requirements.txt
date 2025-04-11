@@ -1,7 +1,0 @@
-yfinance
-pandas
-lxml
-apache-airflow
-playwright
-httpx
-requests
