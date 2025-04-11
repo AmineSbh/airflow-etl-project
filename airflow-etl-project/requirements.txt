@@ -2,8 +2,6 @@ yfinance
 pandas
 lxml
 # apache-airflow
-os
-sys
 sqlalchemy
 psycopg2-binary
 playwright
