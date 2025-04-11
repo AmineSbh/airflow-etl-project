@@ -174,7 +174,7 @@ async def main():
             #     else:
             #         print(f"{stock['name']}: Données non disponibles")
 
-            await asyncio.sleep(10)
+            await asyncio.sleep(100)
 
     except KeyboardInterrupt:
         print("\nArrêt du programme...")
