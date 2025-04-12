@@ -1,21 +1,70 @@
-version : "3"
+version: "3.8"
+
 services:
   postgres:
-    image: postgres:15
+    image: postgres:14
     container_name: postgres_container
     environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: finance_db
+      POSTGRES_USER: airflow_user
+      POSTGRES_PASSWORD: airflow_password
+      POSTGRES_DB: airflow_db
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - airflow_network
 
-  app:
+  airflow-webserver:
+    image: apache/airflow:2.6.0
+    container_name: airflow_webserver
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow_user:airflow_password@postgres:5432/airflow_db
+      AIRFLOW__CORE__FERNET_KEY: your_fernet_key
+      AIRFLOW__WEBSERVER__SECRET_KEY: your_secret_key
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./plugins:/opt/airflow/plugins
+    depends_on:
+      - postgres
+    networks:
+      - airflow_network
+
+  airflow-scheduler:
+    image: apache/airflow:2.6.0
+    container_name: airflow_scheduler
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow_user:airflow_password@postgres:5432/airflow_db
+      AIRFLOW__CORE__FERNET_KEY: your_fernet_key
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./plugins:/opt/airflow/plugins
+    depends_on:
+      - postgres
+    networks:
+      - airflow_network
+
+  streamlit:
+    build:
+      context: ./affichage  # Répertoire contenant le Dockerfile de Streamlit
+    container_name: streamlit_app
+    ports:
+      - "8501:8501"
+    depends_on:
+      - postgres
+    networks:
+      - airflow_network
+
+app:
     build:
       context: .
-      dockerfile: scripts_etl/Dockerfile
+      dockerfile: ./scripts_etl/Dockerfile
     container_name: app_container
     environment:
       - DB_HOST=postgres
@@ -29,3 +78,6 @@ services:
       - postgres
 volumes:
   postgres_data:
+
+networks:
+  airflow_network:
