@@ -15,7 +15,7 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: scripts_etl/Dockerfile
     container_name: app_container
     environment:
       - DB_HOST=postgres
