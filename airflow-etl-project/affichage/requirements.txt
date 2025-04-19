@@ -2,3 +2,4 @@ streamlit
 psycopg2
 pandas
 plotly
+sqlalchemy

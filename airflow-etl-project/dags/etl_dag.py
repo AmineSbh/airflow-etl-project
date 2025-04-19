@@ -1,41 +1,30 @@
 from airflow import DAG
 from airflow.providers.docker.operators.docker import DockerOperator
-from datetime import datetime
+from datetime import datetime, timedelta
 
-# Définir le DAG
+default_args = {
+    "owner": "airflow",
+    "depends_on_past": False,
+    "email_on_failure": False,
+    "email_on_retry": False,
+    "retries": 1,
+    "retry_delay": timedelta(minutes=5),
+}
+
 with DAG(
-    dag_id="etl_pipeline",
+    "etl_pipeline",
+    default_args=default_args,
+    description="Pipeline ETL pour exécuter extract.py",
+    schedule_interval="@daily",  # Exécuter tous les jours
     start_date=datetime(2023, 1, 1),
-    schedule_interval="@daily",
     catchup=False,
 ) as dag:
 
-    # Tâche : Extraction des données
-    extract = DockerOperator(
-        task_id="extract_data",
-        image="etl_image",  # Image Docker contenant vos scripts ETL
-        command="python /app/scripts_etl/extract.py",
-        docker_url="unix://var/run/docker.sock",
-        network_mode="airflow_network",
+    etl_task = DockerOperator(
+        task_id="run_etl",
+        image="etl_image",  # Nom de l'image Docker pour votre script ETL
+        command="python /app/extract.py",  # Commande à exécuter dans le conteneur
+        docker_url="unix://var/run/docker.sock",  # URL Docker
+        network_mode="airflow_network",  # Réseau Docker
+        auto_remove=True,  # Supprimer le conteneur après exécution
     )
-
-    # Tâche : Transformation des données
-    transform = DockerOperator(
-        task_id="transform_data",
-        image="etl_image",
-        command="python /app/scripts_etl/transform.py",
-        docker_url="unix://var/run/docker.sock",
-        network_mode="airflow_network",
-    )
-
-    # Tâche : Chargement des données
-    load = DockerOperator(
-        task_id="load_data",
-        image="etl_image",
-        command="python /app/scripts_etl/load.py",
-        docker_url="unix://var/run/docker.sock",
-        network_mode="airflow_network",
-    )
-
-    # Définir les dépendances
-    extract >> transform >> load

@@ -1,17 +1,21 @@
-# Utiliser une image Python comme base
 FROM python:3.9-slim
 
-# Définir le répertoire de travail dans le conteneur
 WORKDIR /app
 
-# Copier les fichiers de l'application dans le conteneur
-COPY . /app
+# Installation des dépendances système nécessaires
+RUN apt-get update && apt-get install -y \
+    libpq-dev gcc && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Installer les dépendances
+# Copie des fichiers requis
+COPY requirements.txt .
+COPY app.py .
+
+# Installation des dépendances Python
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Exposer le port utilisé par Streamlit
+# Exposition du port Streamlit
 EXPOSE 8501
 
-# Commande pour démarrer l'application Streamlit
-CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+# Commande pour démarrer l'application
+CMD ["streamlit", "run", "app.py", "--server.address", "0.0.0.0"]

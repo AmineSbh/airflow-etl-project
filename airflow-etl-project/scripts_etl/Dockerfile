@@ -14,4 +14,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN playwright install --with-deps
 
 # Commande par défaut pour exécuter le script
-CMD ["python", "scripts-etl/extract.py"]
+CMD ["python", "extract.py"]
