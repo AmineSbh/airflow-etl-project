@@ -24,7 +24,8 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r airflow-etl-project/requirements.txt
+          pip install -r airflow-etl-project/affichage/requirements.txt
+          pip install -r airflow-etl-project/scripts_etl/requirements.txt
 
       - name: List installed packages
         run: |
