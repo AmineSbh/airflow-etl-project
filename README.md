@@ -1,9 +1,4 @@
-diff --git a/README.md b/README.md
-index f9269c63796cd4fbd0a9328a7bc97f5c2a1190f1..c3075ef765c89a4b0368f59738ae9e16a088028e 100644
---- a/README.md
-+++ b/README.md
-@@ -1,2 +1,40 @@
- # airflow-etl-project
+# airflow-etl-project
 +
  Projet complet permettant de créer des pipelines de données.
 +
