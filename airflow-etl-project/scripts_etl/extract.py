@@ -125,6 +125,8 @@ async def get_stock_prices(companies):
                     "name": company["name"],
                     "price": "N/A",
                     "change": "N/A",
+                    "open": "N/A", # Assurez-vous d'ajouter N/A pour toutes les colonnes en cas d'erreur
+                    "date": "N/A",
                 }
             )
 
@@ -151,36 +153,27 @@ async def main():
         print("Échec de toutes les méthodes de scraping. Arrêt du programme.")
         return
 
-    print(f"\nSuivi des cours en temps réel pour {len(companies)} entreprises")
-    print("Mise à jour toutes les 10 secondes. Ctrl+C pour arrêter.\n")
+    print(f"\nSuivi des cours pour {len(companies)} entreprises")
 
+
+    # --- CORRECTION ---
+    # La boucle 'while True' et le 'try/except KeyboardInterrupt' ont été retirés.
+    # Le script s'exécute maintenant une seule fois.
     try:
-        while True:
-            stock_prices = await get_stock_prices(companies)
+        stock_prices = await get_stock_prices(companies)
 
-            # Transformation des données
-            transformed_data = transform(stock_prices)
+        # Transformation des données
+        transformed_data = transform(stock_prices)
 
-            # Chargement des données dans PostgreSQL
-            load_to_postgresql(transformed_data, "stock_prices")
+        # Chargement des données dans PostgreSQL
+        load_to_postgresql(transformed_data, "stock_prices")
 
-            # # Affichage des résultats
-            # print("\033[2J\033[H")  # Clear screen
-            # print(transformed_data)
-            # print("\nDétails des cours:")
-            # for stock in stock_prices:
-            #     if stock["price"] != "N/A":
-            #         print(f"{stock['name']}: {stock['price']}€ ({stock['change']}%)")
-            #     else:
-            #         print(f"{stock['name']}: Données non disponibles")
+        print("\nPipeline ETL terminé avec succès.")
 
-            await asyncio.sleep(100)
-
-    except KeyboardInterrupt:
-        print("\nArrêt du programme...")
     except Exception as e:
         print(f"\nErreur inattendue: {e}")
+    # --- FIN CORRECTION ---
 
 
-if __name__ == "__main__":
+if __name__ == "__main":
     asyncio.run(main())

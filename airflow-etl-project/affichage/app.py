@@ -1,46 +1,51 @@
-import psycopg2
+import psycopg2  # Gardé au cas où sqlalchemy en aurait besoin, mais pas directement utilisé
 import pandas as pd
 import streamlit as st
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text  # <-- AJOUTÉ 'text'
 import time
 import logging
+import os
 
 # Configuration du logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Configuration de la connexion à la base de données
-DB_CONFIG = {
-    "host": "localhost",
-    "port": "5433",
-    "database": "airflow",
-    "user": "airflow",
-    "password": "airflow",
-}
-
+# URL de la base de données depuis l'environnement (fournie par docker-compose)
+DATABASE_URL = os.getenv(
+    "DATABASE_URL",
+    # Fallback (au cas où)
+    "postgresql://airflow:airflow@postgres:5432/airflow"
+)
 
 def get_database_url():
     """Construit l'URL de connexion à la base de données."""
-    return f"postgresql://{DB_CONFIG['user']}:{DB_CONFIG['password']}@{DB_CONFIG['host']}:{DB_CONFIG['port']}/{DB_CONFIG['database']}"
+    return DATABASE_URL
 
 
 def wait_for_database():
     """Attend que la base de données soit disponible."""
     max_retries = 30
     retry_interval = 2
+    
+    # Utilise une URL locale pour les tests si DATABASE_URL n'est pas définie
+    # Note: Le 'postgres' dans l'URL ne fonctionnera que depuis un autre conteneur Docker
+    # sur le même réseau.
+    engine = create_engine(get_database_url())
+
+    logger.info(f"Tentative de connexion à la base de données...")
 
     for i in range(max_retries):
         try:
-            conn = psycopg2.connect(**DB_CONFIG)
+            conn = engine.connect()
             conn.close()
             logger.info("Base de données connectée avec succès!")
             return True
-        except psycopg2.OperationalError as e:
+        except Exception as e:
             logger.warning(
-                f"Tentative {i+1}/{max_retries}: La base de données n'est pas encore prête. Nouvelle tentative dans {retry_interval} secondes..."
+                f"Tentative {i+1}/{max_retries}: La base de données n'est pas encore prête ({e}). Nouvelle tentative dans {retry_interval} secondes..."
             )
             time.sleep(retry_interval)
-
+            
     logger.error(
         "Impossible de se connecter à la base de données après plusieurs tentatives."
     )
@@ -50,28 +55,24 @@ def wait_for_database():
 def get_available_tables():
     """Récupère la liste des tables disponibles dans la base de données."""
     try:
-        conn = psycopg2.connect(**DB_CONFIG)
-        cur = conn.cursor()
-
-        # Requête pour obtenir toutes les tables publiques
-        cur.execute(
-            """
-            SELECT table_name
-            FROM information_schema.tables
-            WHERE table_schema = 'public'
-        """
-        )
-
-        tables = [table[0] for table in cur.fetchall()]
-
-        cur.close()
-        conn.close()
-
+        engine = create_engine(get_database_url())
+        with engine.connect() as conn:
+            # Requête pour obtenir toutes les tables publiques
+            result = conn.execute(
+                text(  # <-- 'text' est maintenant défini
+                    """
+                    SELECT table_name
+                    FROM information_schema.tables
+                    WHERE table_schema = 'public'
+                    """
+                )
+            )
+            tables = [table[0] for table in result.fetchall()]
         return tables
     except Exception as e:
         logger.error(f"Erreur lors de la récupération des tables : {e}")
         return []
-
+    
 
 def fetch_data(table_name):
     """Récupère les données d'une table spécifique."""
@@ -93,7 +94,7 @@ def main():
     # Attendre que la base de données soit prête
     if not wait_for_database():
         st.error(
-            "Impossible de se connecter à la base de données. Veuillez vérifier la configuration."
+            "Impossible de se connecter à la base de données. Veuillez vérifier la configuration et que le service 'postgres' est en cours d'exécution."
         )
         return
 
@@ -113,7 +114,7 @@ def main():
             df = fetch_data(selected_table)
 
             if df.empty:
-                st.error("Erreur lors de la récupération des données.")
+                st.warning("La table est vide ou une erreur est survenue lors de la récupération des données.")
             else:
                 st.success(f"Données chargées avec succès! ({len(df)} lignes)")
 

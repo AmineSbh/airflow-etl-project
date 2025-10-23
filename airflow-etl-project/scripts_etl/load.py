@@ -8,11 +8,11 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Configuration de la base de données
-DB_HOST = "localhost"
-DB_PORT = "5433"
-DB_NAME = "airflow"  # Changé de airflow_db à airflow
-DB_USER = "airflow"  # Changé de airflow_user à airflow
-DB_PASSWORD = "airflow"  # Changé de airflow_password à airflow
+DB_HOST = "postgres"  # <- CORRIGÉ (pas localhost)
+DB_PORT = "5432"      # <- CORRIGÉ (pas 5433)
+DB_NAME = "airflow"
+DB_USER = "airflow"
+DB_PASSWORD = "airflow"
 
 # Construction de l'URL de connexion
 DATABASE_URL = os.getenv(

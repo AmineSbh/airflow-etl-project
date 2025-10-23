@@ -26,5 +26,6 @@ with DAG(
         command="python /app/extract.py",  # Commande à exécuter dans le conteneur
         docker_url="unix://var/run/docker.sock",  # URL Docker
         network_mode="airflow_network",  # Réseau Docker
-        auto_remove=True,  # Supprimer le conteneur après exécution
+        auto_remove="success"
     )
+
