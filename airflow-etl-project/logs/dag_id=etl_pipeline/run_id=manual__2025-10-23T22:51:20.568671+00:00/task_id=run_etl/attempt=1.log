@@ -1,0 +1,46 @@
+[2025-10-23T22:51:21.530+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2025-10-23T22:51:21.535+0000] {taskinstance.py:2614} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: etl_pipeline.run_etl manual__2025-10-23T22:51:20.568671+00:00 [queued]>
+[2025-10-23T22:51:21.537+0000] {taskinstance.py:2614} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: etl_pipeline.run_etl manual__2025-10-23T22:51:20.568671+00:00 [queued]>
+[2025-10-23T22:51:21.537+0000] {taskinstance.py:2867} INFO - Starting attempt 1 of 2
+[2025-10-23T22:51:21.541+0000] {taskinstance.py:2890} INFO - Executing <Task(DockerOperator): run_etl> on 2025-10-23 22:51:20.568671+00:00
+[2025-10-23T22:51:21.545+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'etl_pipeline', 'run_etl', 'manual__2025-10-23T22:51:20.568671+00:00', '--job-id', '19', '--raw', '--subdir', 'DAGS_FOLDER/etl_dag.py', '--cfg-path', '/tmp/tmpv5592g1a']
+[2025-10-23T22:51:21.546+0000] {standard_task_runner.py:105} INFO - Job 19: Subtask run_etl
+[2025-10-23T22:51:21.546+0000] {logging_mixin.py:190} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70 DeprecationWarning: This process (pid=66083) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-10-23T22:51:21.547+0000] {standard_task_runner.py:72} INFO - Started process 66084 to run task
+[2025-10-23T22:51:21.565+0000] {task_command.py:467} INFO - Running <TaskInstance: etl_pipeline.run_etl manual__2025-10-23T22:51:20.568671+00:00 [running]> on host 596fdc9a152e
+[2025-10-23T22:51:21.594+0000] {taskinstance.py:3134} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='etl_pipeline' AIRFLOW_CTX_TASK_ID='run_etl' AIRFLOW_CTX_EXECUTION_DATE='2025-10-23T22:51:20.568671+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-10-23T22:51:20.568671+00:00'
+[2025-10-23T22:51:21.594+0000] {logging_mixin.py:190} INFO - Task instance is in running state
+[2025-10-23T22:51:21.594+0000] {logging_mixin.py:190} INFO -  Previous state of the Task instance: queued
+[2025-10-23T22:51:21.595+0000] {logging_mixin.py:190} INFO - Current task name:run_etl state:running start_date:2025-10-23 22:51:21.535782+00:00
+[2025-10-23T22:51:21.595+0000] {logging_mixin.py:190} INFO - Dag name:etl_pipeline and current dag run status:running
+[2025-10-23T22:51:21.595+0000] {taskinstance.py:732} INFO - ::endgroup::
+[2025-10-23T22:51:21.619+0000] {docker.py:345} INFO - Starting docker container from image etl_image
+[2025-10-23T22:51:22.213+0000] {docker.py:69} INFO - 
+[2025-10-23T22:51:22.214+0000] {docker.py:69} INFO - === Scraping des entreprises du CAC 40 ===
+[2025-10-23T22:51:23.109+0000] {docker.py:69} INFO - 
+[2025-10-23T22:51:23.110+0000] {docker.py:69} INFO - Suivi des cours pour 40 entreprises
+[2025-10-23T22:51:35.949+0000] {docker.py:69} INFO - /app/transform.py:20: FutureWarning: Downcasting behavior in `replace` is deprecated and will be removed in a future version. To retain the old behavior, explicitly call `result.infer_objects(copy=False)`. To opt-in to the future behavior, set `pd.set_option('future.no_silent_downcasting', True)`
+[2025-10-23T22:51:35.950+0000] {docker.py:69} INFO -   df = df.replace("N/A", np.nan)
+[2025-10-23T22:51:35.951+0000] {docker.py:69} INFO - INFO:load:Tentative de connexion à : postgresql://***:****@postgres:5432/***
+[2025-10-23T22:51:35.961+0000] {docker.py:69} INFO - INFO:load:DataFrame à charger : 
+[2025-10-23T22:51:35.962+0000] {docker.py:69} INFO -   name   price    change    open                date
+[2025-10-23T22:51:35.962+0000] {docker.py:69} INFO - 0   AC   42.21 -0.985226   42.15 2025-10-23 15:36:18
+[2025-10-23T22:51:35.962+0000] {docker.py:69} INFO - 1   AI  172.88  0.278429  171.76 2025-10-23 15:39:10
+[2025-10-23T22:51:35.963+0000] {docker.py:69} INFO - 2  AIR  207.25  0.704566  206.40 2025-10-23 15:39:11
+[2025-10-23T22:51:35.963+0000] {docker.py:69} INFO - 3   MT     NaN       NaN     NaN 2019-06-28 22:07:38
+[2025-10-23T22:51:35.963+0000] {docker.py:69} INFO - 4   CS   39.39  0.127095   39.36 2025-10-23 15:39:10
+[2025-10-23T22:51:35.988+0000] {docker.py:69} INFO - /app/load.py:55: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+[2025-10-23T22:51:35.989+0000] {docker.py:69} INFO -   dataframe.to_sql(
+[2025-10-23T22:51:35.990+0000] {docker.py:69} INFO - ERROR:load:Erreur lors du chargement des données : 'Connection' object has no attribute 'cursor'
+[2025-10-23T22:51:35.990+0000] {docker.py:69} INFO - ERROR:load:Type d'erreur : AttributeError
+[2025-10-23T22:51:35.990+0000] {docker.py:69} INFO - 
+[2025-10-23T22:51:35.991+0000] {docker.py:69} INFO - Pipeline ETL terminé avec succès.
+[2025-10-23T22:51:36.179+0000] {taskinstance.py:341} INFO - ::group::Post task execution logs
+[2025-10-23T22:51:36.180+0000] {taskinstance.py:353} INFO - Marking task as SUCCESS. dag_id=etl_pipeline, task_id=run_etl, run_id=manual__2025-10-23T22:51:20.568671+00:00, execution_date=20251023T225120, start_date=20251023T225121, end_date=20251023T225136
+[2025-10-23T22:51:36.201+0000] {logging_mixin.py:190} INFO - Task instance in success state
+[2025-10-23T22:51:36.202+0000] {logging_mixin.py:190} INFO -  Previous state of the Task instance: running
+[2025-10-23T22:51:36.202+0000] {logging_mixin.py:190} INFO - Dag name:etl_pipeline queued_at:2025-10-23 22:51:20.580600+00:00
+[2025-10-23T22:51:36.202+0000] {logging_mixin.py:190} INFO - Task hostname:596fdc9a152e operator:DockerOperator
+[2025-10-23T22:51:36.239+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2025-10-23T22:51:36.268+0000] {taskinstance.py:3901} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-10-23T22:51:36.268+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

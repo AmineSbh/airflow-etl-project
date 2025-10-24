@@ -1,0 +1,147 @@
+[2025-10-24T08:13:02.195+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2025-10-24T08:13:02.204+0000] {taskinstance.py:2614} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: etl_pipeline.run_etl manual__2025-10-24T08:13:00.481016+00:00 [queued]>
+[2025-10-24T08:13:02.207+0000] {taskinstance.py:2614} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: etl_pipeline.run_etl manual__2025-10-24T08:13:00.481016+00:00 [queued]>
+[2025-10-24T08:13:02.207+0000] {taskinstance.py:2867} INFO - Starting attempt 1 of 2
+[2025-10-24T08:13:02.211+0000] {taskinstance.py:2890} INFO - Executing <Task(DockerOperator): run_etl> on 2025-10-24 08:13:00.481016+00:00
+[2025-10-24T08:13:02.217+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'etl_pipeline', 'run_etl', 'manual__2025-10-24T08:13:00.481016+00:00', '--job-id', '35', '--raw', '--subdir', 'DAGS_FOLDER/etl_dag.py', '--cfg-path', '/tmp/tmp_mojlq74']
+[2025-10-24T08:13:02.220+0000] {standard_task_runner.py:105} INFO - Job 35: Subtask run_etl
+[2025-10-24T08:13:02.219+0000] {logging_mixin.py:190} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70 DeprecationWarning: This process (pid=472) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-10-24T08:13:02.221+0000] {standard_task_runner.py:72} INFO - Started process 473 to run task
+[2025-10-24T08:13:02.256+0000] {task_command.py:467} INFO - Running <TaskInstance: etl_pipeline.run_etl manual__2025-10-24T08:13:00.481016+00:00 [running]> on host 82f4dd88a005
+[2025-10-24T08:13:02.301+0000] {taskinstance.py:3134} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='etl_pipeline' AIRFLOW_CTX_TASK_ID='run_etl' AIRFLOW_CTX_EXECUTION_DATE='2025-10-24T08:13:00.481016+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-10-24T08:13:00.481016+00:00'
+[2025-10-24T08:13:02.302+0000] {logging_mixin.py:190} INFO - Task instance is in running state
+[2025-10-24T08:13:02.302+0000] {logging_mixin.py:190} INFO -  Previous state of the Task instance: queued
+[2025-10-24T08:13:02.302+0000] {logging_mixin.py:190} INFO - Current task name:run_etl state:running start_date:2025-10-24 08:13:02.204692+00:00
+[2025-10-24T08:13:02.303+0000] {logging_mixin.py:190} INFO - Dag name:etl_pipeline and current dag run status:running
+[2025-10-24T08:13:02.303+0000] {taskinstance.py:732} INFO - ::endgroup::
+[2025-10-24T08:13:02.342+0000] {docker.py:345} INFO - Starting docker container from image etl_image
+[2025-10-24T08:13:03.359+0000] {docker.py:69} INFO - 
+[2025-10-24T08:13:03.360+0000] {docker.py:69} INFO - === Scraping des entreprises du CAC 40 ===
+[2025-10-24T08:13:04.598+0000] {docker.py:69} INFO - 
+[2025-10-24T08:13:04.599+0000] {docker.py:69} INFO - Suivi des cours pour 40 entreprises
+[2025-10-24T08:13:23.525+0000] {docker.py:69} INFO - /app/transform.py:20: FutureWarning: Downcasting behavior in `replace` is deprecated and will be removed in a future version. To retain the old behavior, explicitly call `result.infer_objects(copy=False)`. To opt-in to the future behavior, set `pd.set_option('future.no_silent_downcasting', True)`
+[2025-10-24T08:13:23.525+0000] {docker.py:69} INFO -   df = df.replace("N/A", np.nan)
+[2025-10-24T08:13:23.525+0000] {docker.py:69} INFO - INFO:load:Tentative de connexion à : postgresql://***:****@postgres:5432/***
+[2025-10-24T08:13:23.529+0000] {docker.py:69} INFO - INFO:load:DataFrame à charger : 
+[2025-10-24T08:13:23.529+0000] {docker.py:69} INFO -   name   price    change    open                date
+[2025-10-24T08:13:23.529+0000] {docker.py:69} INFO - 0   AC   44.57  5.591094   44.21 2025-10-24 07:58:04
+[2025-10-24T08:13:23.529+0000] {docker.py:69} INFO - 1   AI  172.74 -0.080999  173.64 2025-10-24 07:58:05
+[2025-10-24T08:13:23.529+0000] {docker.py:69} INFO - 2  AIR  207.00 -0.120627  208.70 2025-10-24 07:57:50
+[2025-10-24T08:13:23.530+0000] {docker.py:69} INFO - 3   MT     NaN       NaN     NaN 2019-06-28 22:07:38
+[2025-10-24T08:13:23.530+0000] {docker.py:69} INFO - 4   CS   39.14 -0.634679   39.44 2025-10-24 07:58:06
+[2025-10-24T08:13:23.530+0000] {docker.py:69} INFO - ERROR:load:Erreur lors du chargement des données : Using URI string without sqlalchemy installed.
+[2025-10-24T08:13:23.530+0000] {docker.py:69} INFO - ERROR:load:Type d'erreur : ImportError
+[2025-10-24T08:13:23.530+0000] {docker.py:69} INFO - 
+[2025-10-24T08:13:23.531+0000] {docker.py:69} INFO - Erreur inattendue: Using URI string without sqlalchemy installed.
+[2025-10-24T08:13:23.531+0000] {docker.py:69} INFO - Traceback (most recent call last):
+[2025-10-24T08:13:23.531+0000] {docker.py:69} INFO -   File "/app/extract.py", line 119, in <module>
+[2025-10-24T08:13:23.531+0000] {docker.py:69} INFO -     asyncio.run(main())
+[2025-10-24T08:13:23.531+0000] {docker.py:69} INFO -   File "/usr/local/lib/python3.9/asyncio/runners.py", line 44, in run
+[2025-10-24T08:13:23.531+0000] {docker.py:69} INFO -     return loop.run_until_complete(main)
+[2025-10-24T08:13:23.531+0000] {docker.py:69} INFO -   File "/usr/local/lib/python3.9/asyncio/base_events.py", line 647, in run_until_complete
+[2025-10-24T08:13:23.531+0000] {docker.py:69} INFO -     return future.result()
+[2025-10-24T08:13:23.532+0000] {docker.py:69} INFO -   File "/app/extract.py", line 115, in main
+[2025-10-24T08:13:23.532+0000] {docker.py:69} INFO -     raise e
+[2025-10-24T08:13:23.532+0000] {docker.py:69} INFO -   File "/app/extract.py", line 107, in main
+[2025-10-24T08:13:23.532+0000] {docker.py:69} INFO -     load_to_postgresql(transformed_data, "stock_prices")
+[2025-10-24T08:13:23.532+0000] {docker.py:69} INFO -   File "/app/load.py", line 59, in load_to_postgresql
+[2025-10-24T08:13:23.532+0000] {docker.py:69} INFO - 
+[2025-10-24T08:13:23.532+0000] {docker.py:69} INFO - raise e
+[2025-10-24T08:13:23.532+0000] {docker.py:69} INFO -   File "/app/load.py", line 38, in load_to_postgresql
+[2025-10-24T08:13:23.532+0000] {docker.py:69} INFO -     dataframe.to_sql(
+[2025-10-24T08:13:23.532+0000] {docker.py:69} INFO -   File "/usr/local/lib/python3.9/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+[2025-10-24T08:13:23.532+0000] {docker.py:69} INFO -     return func(*args, **kwargs)
+[2025-10-24T08:13:23.533+0000] {docker.py:69} INFO -   File "/usr/local/lib/python3.9/site-packages/pandas/core/generic.py", line 3109, in to_sql
+[2025-10-24T08:13:23.533+0000] {docker.py:69} INFO -     return sql.to_sql(
+[2025-10-24T08:13:23.533+0000] {docker.py:69} INFO -   File "/usr/local/lib/python3.9/site-packages/pandas/io/sql.py", line 843, in to_sql
+[2025-10-24T08:13:23.533+0000] {docker.py:69} INFO -     with pandasSQL_builder(con, schema=schema, need_transaction=True) as pandas_sql:
+[2025-10-24T08:13:23.533+0000] {docker.py:69} INFO -   File "/usr/local/lib/python3.9/site-packages/pandas/io/sql.py", line 905, in pandasSQL_builder
+[2025-10-24T08:13:23.533+0000] {docker.py:69} INFO -     raise ImportError("Using URI string without sqlalchemy installed.")
+[2025-10-24T08:13:23.533+0000] {docker.py:69} INFO - ImportError: Using URI string without sqlalchemy installed.
+[2025-10-24T08:13:23.711+0000] {taskinstance.py:3313} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 763, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 734, in _execute_callable
+    return ExecutionCallableRunner(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 424, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/providers/docker/operators/docker.py", line 485, in execute
+    return self._run_image()
+           ^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/providers/docker/operators/docker.py", line 362, in _run_image
+    return self._run_image_with_mounts(self.mounts, add_tmp_variable=False)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/providers/docker/operators/docker.py", line 419, in _run_image_with_mounts
+    raise DockerContainerFailedException(f"Docker container failed: {result!r}", logs=log_lines)
+airflow.providers.docker.exceptions.DockerContainerFailedException: Docker container failed: {'StatusCode': 1}
+[2025-10-24T08:13:23.719+0000] {logging_mixin.py:190} INFO - Task instance in failure state
+[2025-10-24T08:13:23.719+0000] {logging_mixin.py:190} INFO - Task start:2025-10-24 08:13:02.204692+00:00 end:2025-10-24 08:13:23.719110+00:00 duration:21.514418
+[2025-10-24T08:13:23.720+0000] {logging_mixin.py:190} INFO - Task:<Task(DockerOperator): run_etl> dag:<DAG: etl_pipeline> dagrun:<DagRun etl_pipeline @ 2025-10-24 08:13:00.481016+00:00: manual__2025-10-24T08:13:00.481016+00:00, state:running, queued_at: 2025-10-24 08:13:00.501219+00:00. externally triggered: True>
+[2025-10-24T08:13:23.720+0000] {logging_mixin.py:190} INFO - Failure caused by Docker container failed: {'StatusCode': 1}
+[2025-10-24T08:13:23.720+0000] {taskinstance.py:1226} INFO - Marking task as UP_FOR_RETRY. dag_id=etl_pipeline, task_id=run_etl, run_id=manual__2025-10-24T08:13:00.481016+00:00, execution_date=20251024T081300, start_date=20251024T081302, end_date=20251024T081323
+[2025-10-24T08:13:23.745+0000] {taskinstance.py:341} INFO - ::group::Post task execution logs
+[2025-10-24T08:13:23.745+0000] {standard_task_runner.py:124} ERROR - Failed to execute job 35 for task run_etl (Docker container failed: {'StatusCode': 1}; 473)
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py", line 117, in _start_by_fork
+    ret = args.func(args, dag=self.dag)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/cli_config.py", line 49, in command
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/cli.py", line 116, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 483, in task_run
+    task_return_code = _run_task_by_selected_method(args, _dag, ti)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 256, in _run_task_by_selected_method
+    return _run_raw_task(args, ti)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 341, in _run_raw_task
+    return ti._run_raw_task(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/session.py", line 97, in wrapper
+    return func(*args, session=session, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3006, in _run_raw_task
+    return _run_raw_task(
+           ^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 274, in _run_raw_task
+    TaskInstance._execute_task_with_callbacks(
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3161, in _execute_task_with_callbacks
+    result = self._execute_task(context, task_orig)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3185, in _execute_task
+    return _execute_task(self, context, task_orig)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 763, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 734, in _execute_callable
+    return ExecutionCallableRunner(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 424, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/providers/docker/operators/docker.py", line 485, in execute
+    return self._run_image()
+           ^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/providers/docker/operators/docker.py", line 362, in _run_image
+    return self._run_image_with_mounts(self.mounts, add_tmp_variable=False)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/providers/docker/operators/docker.py", line 419, in _run_image_with_mounts
+    raise DockerContainerFailedException(f"Docker container failed: {result!r}", logs=log_lines)
+airflow.providers.docker.exceptions.DockerContainerFailedException: Docker container failed: {'StatusCode': 1}
+[2025-10-24T08:13:23.765+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 1
+[2025-10-24T08:13:23.776+0000] {taskinstance.py:3901} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-10-24T08:13:23.777+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

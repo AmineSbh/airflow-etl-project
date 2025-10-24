@@ -89,48 +89,41 @@ def fetch_data(table_name):
 def main():
     st.set_page_config(page_title="Dashboard Finance", page_icon="📊", layout="wide")
 
-    st.title("📊 Dashboard Finance")
+    st.title("📊 Dashboard CAC40 (via ETL)")
 
     # Attendre que la base de données soit prête
     if not wait_for_database():
         st.error(
-            "Impossible de se connecter à la base de données. Veuillez vérifier la configuration et que le service 'postgres' est en cours d'exécution."
+            "Impossible de se connecter à la base de données. Veuillez vérifier la configuration."
         )
         return
 
-    # Récupérer la liste des tables
-    tables = get_available_tables()
+    # Nom de la table que nous voulons afficher (celle de l'ETL)
+    table_name = "stock_prices"
+    
+    # Nous n'affichons que la table 'stock_prices'
+    with st.spinner(f"Chargement des données de la table '{table_name}'..."):
+        df = fetch_data(table_name)
 
-    if not tables:
-        st.warning("Aucune table n'a été trouvée dans la base de données.")
-        return
+        if df.empty:
+            st.error(f"Erreur lors de la récupération des données ou la table '{table_name}' est vide.")
+            st.warning("Avez-vous lancé le pipeline ETL dans Airflow au moins une fois ?")
+        else:
+            st.success(f"Données chargées avec succès! ({len(df)} lignes)")
 
-    # Sélecteur de table
-    selected_table = st.selectbox("Sélectionnez une table à afficher:", tables)
+            # Afficher les statistiques de base
+            st.subheader("Aperçu des données (table: stock_prices)")
+            st.dataframe(df)
 
-    if selected_table:
-        # Récupérer et afficher les données
-        with st.spinner("Chargement des données..."):
-            df = fetch_data(selected_table)
+            # Afficher les informations sur les colonnes
+            st.subheader("Informations sur les colonnes")
+            st.write(df.dtypes)
 
-            if df.empty:
-                st.warning("La table est vide ou une erreur est survenue lors de la récupération des données.")
-            else:
-                st.success(f"Données chargées avec succès! ({len(df)} lignes)")
-
-                # Afficher les statistiques de base
-                st.subheader("Aperçu des données")
-                st.dataframe(df)
-
-                # Afficher les informations sur les colonnes
-                st.subheader("Informations sur les colonnes")
-                st.write(df.dtypes)
-
-                # Si la table contient des données numériques, afficher des statistiques
-                numeric_cols = df.select_dtypes(include=["float64", "int64"]).columns
-                if not numeric_cols.empty:
-                    st.subheader("Statistiques descriptives")
-                    st.write(df[numeric_cols].describe())
+            # Si la table contient des données numériques, afficher des statistiques
+            numeric_cols = df.select_dtypes(include=["float64", "int64"]).columns
+            if not numeric_cols.empty:
+                st.subheader("Statistiques descriptives")
+                st.write(df[numeric_cols].describe())
 
 
 if __name__ == "__main__":

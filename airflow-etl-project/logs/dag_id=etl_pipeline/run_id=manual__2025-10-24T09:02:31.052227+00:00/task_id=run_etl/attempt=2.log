@@ -1,0 +1,194 @@
+[2025-10-24T09:07:50.454+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2025-10-24T09:07:50.462+0000] {taskinstance.py:2614} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: etl_pipeline.run_etl manual__2025-10-24T09:02:31.052227+00:00 [queued]>
+[2025-10-24T09:07:50.466+0000] {taskinstance.py:2614} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: etl_pipeline.run_etl manual__2025-10-24T09:02:31.052227+00:00 [queued]>
+[2025-10-24T09:07:50.466+0000] {taskinstance.py:2867} INFO - Starting attempt 2 of 2
+[2025-10-24T09:07:50.472+0000] {taskinstance.py:2890} INFO - Executing <Task(DockerOperator): run_etl> on 2025-10-24 09:02:31.052227+00:00
+[2025-10-24T09:07:50.478+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'etl_pipeline', 'run_etl', 'manual__2025-10-24T09:02:31.052227+00:00', '--job-id', '52', '--raw', '--subdir', 'DAGS_FOLDER/etl_dag.py', '--cfg-path', '/tmp/tmpjww1jqp4']
+[2025-10-24T09:07:50.479+0000] {logging_mixin.py:190} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70 DeprecationWarning: This process (pid=3435) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-10-24T09:07:50.480+0000] {standard_task_runner.py:105} INFO - Job 52: Subtask run_etl
+[2025-10-24T09:07:50.480+0000] {standard_task_runner.py:72} INFO - Started process 3436 to run task
+[2025-10-24T09:07:50.515+0000] {task_command.py:467} INFO - Running <TaskInstance: etl_pipeline.run_etl manual__2025-10-24T09:02:31.052227+00:00 [running]> on host b394b3a3c42c
+[2025-10-24T09:07:50.616+0000] {taskinstance.py:3134} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='etl_pipeline' AIRFLOW_CTX_TASK_ID='run_etl' AIRFLOW_CTX_EXECUTION_DATE='2025-10-24T09:02:31.052227+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-10-24T09:02:31.052227+00:00'
+[2025-10-24T09:07:50.618+0000] {logging_mixin.py:190} INFO - Task instance is in running state
+[2025-10-24T09:07:50.619+0000] {logging_mixin.py:190} INFO -  Previous state of the Task instance: queued
+[2025-10-24T09:07:50.619+0000] {logging_mixin.py:190} INFO - Current task name:run_etl state:running start_date:2025-10-24 09:07:50.463023+00:00
+[2025-10-24T09:07:50.620+0000] {logging_mixin.py:190} INFO - Dag name:etl_pipeline and current dag run status:running
+[2025-10-24T09:07:50.620+0000] {taskinstance.py:732} INFO - ::endgroup::
+[2025-10-24T09:07:50.689+0000] {docker.py:345} INFO - Starting docker container from image etl_image
+[2025-10-24T09:07:51.734+0000] {docker.py:69} INFO - INFO:__main__:
+[2025-10-24T09:07:51.734+0000] {docker.py:69} INFO - === Scraping des entreprises du CAC 40 ===
+[2025-10-24T09:07:52.730+0000] {docker.py:69} INFO - INFO:__main__:
+[2025-10-24T09:07:52.731+0000] {docker.py:69} INFO - Suivi des cours pour 40 entreprises
+[2025-10-24T09:08:06.219+0000] {docker.py:69} INFO - /app/transform.py:20: FutureWarning: Downcasting behavior in `replace` is deprecated and will be removed in a future version. To retain the old behavior, explicitly call `result.infer_objects(copy=False)`. To opt-in to the future behavior, set `pd.set_option('future.no_silent_downcasting', True)`
+[2025-10-24T09:08:06.222+0000] {docker.py:69} INFO -   df = df.replace("N/A", np.nan)
+[2025-10-24T09:08:06.222+0000] {docker.py:69} INFO - INFO:load:Tentative de connexion à : postgresql://***:****@postgres:5432/***
+[2025-10-24T09:08:06.224+0000] {docker.py:69} INFO - INFO:load:DataFrame à charger (extrait) : 
+[2025-10-24T09:08:06.225+0000] {docker.py:69} INFO -   name   price    change    open                date
+[2025-10-24T09:08:06.225+0000] {docker.py:69} INFO - 0   AC   44.54  5.518716   44.21 2025-10-24 08:52:28
+[2025-10-24T09:08:06.225+0000] {docker.py:69} INFO - 1   AI  171.98 -0.520537  173.64 2025-10-24 08:52:51
+[2025-10-24T09:08:06.225+0000] {docker.py:69} INFO - 2  AIR  206.20 -0.506636  208.70 2025-10-24 08:52:18
+[2025-10-24T09:08:06.225+0000] {docker.py:69} INFO - 3   MT     NaN       NaN     NaN 2019-06-28 22:07:38
+[2025-10-24T09:08:06.225+0000] {docker.py:69} INFO - 4   CS   39.04 -0.888547   39.44 2025-10-24 08:52:35
+[2025-10-24T09:08:06.235+0000] {docker.py:69} INFO - INFO:load:Ouverture de la connexion à la base de données...
+[2025-10-24T09:08:06.243+0000] {docker.py:69} INFO - /app/load.py:60: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+[2025-10-24T09:08:06.243+0000] {docker.py:69} INFO -   dataframe.to_sql(
+[2025-10-24T09:08:06.244+0000] {docker.py:69} INFO - ERROR:load:Erreur lors du chargement des données : Execution failed on sql '
+[2025-10-24T09:08:06.244+0000] {docker.py:69} INFO -         SELECT
+[2025-10-24T09:08:06.244+0000] {docker.py:69} INFO -             name
+[2025-10-24T09:08:06.244+0000] {docker.py:69} INFO -         FROM
+[2025-10-24T09:08:06.244+0000] {docker.py:69} INFO -             sqlite_master
+[2025-10-24T09:08:06.244+0000] {docker.py:69} INFO -         WHERE
+[2025-10-24T09:08:06.244+0000] {docker.py:69} INFO -             type IN ('table', 'view')
+[2025-10-24T09:08:06.244+0000] {docker.py:69} INFO -             AND name=?;
+[2025-10-24T09:08:06.245+0000] {docker.py:69} INFO -         ': syntax error at or near ";"
+[2025-10-24T09:08:06.245+0000] {docker.py:69} INFO - LINE 8:             AND name=?;
+[2025-10-24T09:08:06.245+0000] {docker.py:69} INFO -                               ^
+[2025-10-24T09:08:06.245+0000] {docker.py:69} INFO - 
+[2025-10-24T09:08:06.245+0000] {docker.py:69} INFO - ERROR:load:Type d'erreur : DatabaseError
+[2025-10-24T09:08:06.245+0000] {docker.py:69} INFO - ERROR:__main__:
+[2025-10-24T09:08:06.245+0000] {docker.py:69} INFO - Erreur inattendue: Execution failed on sql '
+[2025-10-24T09:08:06.245+0000] {docker.py:69} INFO -         SELECT
+[2025-10-24T09:08:06.245+0000] {docker.py:69} INFO -             name
+[2025-10-24T09:08:06.245+0000] {docker.py:69} INFO -         FROM
+[2025-10-24T09:08:06.245+0000] {docker.py:69} INFO -             sqlite_master
+[2025-10-24T09:08:06.245+0000] {docker.py:69} INFO -         WHERE
+[2025-10-24T09:08:06.245+0000] {docker.py:69} INFO -             type IN ('table', 'view')
+[2025-10-24T09:08:06.245+0000] {docker.py:69} INFO -             AND name=?;
+[2025-10-24T09:08:06.245+0000] {docker.py:69} INFO -         ': syntax error at or near ";"
+[2025-10-24T09:08:06.246+0000] {docker.py:69} INFO - LINE 8:             AND name=?;
+[2025-10-24T09:08:06.246+0000] {docker.py:69} INFO -                               ^
+[2025-10-24T09:08:06.246+0000] {docker.py:69} INFO - Traceback (most recent call last):
+[2025-10-24T09:08:06.246+0000] {docker.py:69} INFO -   File "/usr/local/lib/python3.9/site-packages/pandas/io/sql.py", line 2664, in execute
+[2025-10-24T09:08:06.248+0000] {docker.py:69} INFO -     cur.execute(sql, *args)
+[2025-10-24T09:08:06.248+0000] {docker.py:69} INFO - psycopg2.errors.SyntaxError: syntax error at or near ";"
+[2025-10-24T09:08:06.248+0000] {docker.py:69} INFO - LINE 8:             AND name=?;
+[2025-10-24T09:08:06.248+0000] {docker.py:69} INFO -                               ^
+[2025-10-24T09:08:06.248+0000] {docker.py:69} INFO - 
+[2025-10-24T09:08:06.248+0000] {docker.py:69} INFO - 
+[2025-10-24T09:08:06.248+0000] {docker.py:69} INFO - The above exception was the direct cause of the following exception:
+[2025-10-24T09:08:06.248+0000] {docker.py:69} INFO - 
+[2025-10-24T09:08:06.249+0000] {docker.py:69} INFO - Traceback (most recent call last):
+[2025-10-24T09:08:06.249+0000] {docker.py:69} INFO -   File "/app/extract.py", line 155, in <module>
+[2025-10-24T09:08:06.249+0000] {docker.py:69} INFO -     asyncio.run(main())
+[2025-10-24T09:08:06.249+0000] {docker.py:69} INFO -   File "/usr/local/lib/python3.9/asyncio/runners.py", line 44, in run
+[2025-10-24T09:08:06.249+0000] {docker.py:69} INFO -     return loop.run_until_complete(main)
+[2025-10-24T09:08:06.249+0000] {docker.py:69} INFO -   File "/usr/local/lib/python3.9/asyncio/base_events.py", line 647, in run_until_complete
+[2025-10-24T09:08:06.249+0000] {docker.py:69} INFO -     return future.result()
+[2025-10-24T09:08:06.249+0000] {docker.py:69} INFO -   File "/app/extract.py", line 145, in main
+[2025-10-24T09:08:06.249+0000] {docker.py:69} INFO -     load_to_postgresql(transformed_data, "stock_prices")
+[2025-10-24T09:08:06.249+0000] {docker.py:69} INFO -   File "/app/load.py", line 60, in load_to_postgresql
+[2025-10-24T09:08:06.250+0000] {docker.py:69} INFO -     dataframe.to_sql(
+[2025-10-24T09:08:06.250+0000] {docker.py:69} INFO -   File "/usr/local/lib/python3.9/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+[2025-10-24T09:08:06.250+0000] {docker.py:69} INFO -     return func(*args, **kwargs)
+[2025-10-24T09:08:06.250+0000] {docker.py:69} INFO -   File "/usr/local/lib/python3.9/site-packages/pandas/core/generic.py", line 3109, in to_sql
+[2025-10-24T09:08:06.251+0000] {docker.py:69} INFO -     return sql.to_sql(
+[2025-10-24T09:08:06.251+0000] {docker.py:69} INFO -   File "/usr/local/lib/python3.9/site-packages/pandas/io/sql.py", line 844, in to_sql
+[2025-10-24T09:08:06.251+0000] {docker.py:69} INFO -     return pandas_sql.to_sql(
+[2025-10-24T09:08:06.251+0000] {docker.py:69} INFO -   File "/usr/local/lib/python3.9/site-packages/pandas/io/sql.py", line 2840, in to_sql
+[2025-10-24T09:08:06.251+0000] {docker.py:69} INFO -     table.create()
+[2025-10-24T09:08:06.251+0000] {docker.py:69} INFO -   File "/usr/local/lib/python3.9/site-packages/pandas/io/sql.py", line 986, in create
+[2025-10-24T09:08:06.251+0000] {docker.py:69} INFO -     if self.exists():
+[2025-10-24T09:08:06.251+0000] {docker.py:69} INFO -   File "/usr/local/lib/python3.9/site-packages/pandas/io/sql.py", line 972, in exists
+[2025-10-24T09:08:06.251+0000] {docker.py:69} INFO -     return self.pd_sql.has_table(self.name, self.schema)
+[2025-10-24T09:08:06.251+0000] {docker.py:69} INFO -   File "/usr/local/lib/python3.9/site-packages/pandas/io/sql.py", line 2855, in has_table
+[2025-10-24T09:08:06.251+0000] {docker.py:69} INFO -     return len(self.execute(query, [name]).fetchall()) > 0
+[2025-10-24T09:08:06.251+0000] {docker.py:69} INFO -   File "/usr/local/lib/python3.9/site-packages/pandas/io/sql.py", line 2676, in execute
+[2025-10-24T09:08:06.252+0000] {docker.py:69} INFO -     raise ex from exc
+[2025-10-24T09:08:06.252+0000] {docker.py:69} INFO - pandas.errors.DatabaseError: Execution failed on sql '
+[2025-10-24T09:08:06.252+0000] {docker.py:69} INFO -         SELECT
+[2025-10-24T09:08:06.252+0000] {docker.py:69} INFO -             name
+[2025-10-24T09:08:06.252+0000] {docker.py:69} INFO -         FROM
+[2025-10-24T09:08:06.252+0000] {docker.py:69} INFO -             sqlite_master
+[2025-10-24T09:08:06.252+0000] {docker.py:69} INFO -         WHERE
+[2025-10-24T09:08:06.252+0000] {docker.py:69} INFO -             type IN ('table', 'view')
+[2025-10-24T09:08:06.252+0000] {docker.py:69} INFO -             AND name=?;
+[2025-10-24T09:08:06.252+0000] {docker.py:69} INFO -         ': syntax error at or near ";"
+[2025-10-24T09:08:06.252+0000] {docker.py:69} INFO - LINE 8:             AND name=?;
+[2025-10-24T09:08:06.252+0000] {docker.py:69} INFO -                               ^
+[2025-10-24T09:08:06.514+0000] {taskinstance.py:3313} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 763, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 734, in _execute_callable
+    return ExecutionCallableRunner(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 424, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/providers/docker/operators/docker.py", line 485, in execute
+    return self._run_image()
+           ^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/providers/docker/operators/docker.py", line 362, in _run_image
+    return self._run_image_with_mounts(self.mounts, add_tmp_variable=False)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/providers/docker/operators/docker.py", line 419, in _run_image_with_mounts
+    raise DockerContainerFailedException(f"Docker container failed: {result!r}", logs=log_lines)
+airflow.providers.docker.exceptions.DockerContainerFailedException: Docker container failed: {'StatusCode': 1}
+[2025-10-24T09:08:06.525+0000] {logging_mixin.py:190} INFO - Task instance in failure state
+[2025-10-24T09:08:06.525+0000] {logging_mixin.py:190} INFO - Task start:2025-10-24 09:07:50.463023+00:00 end:2025-10-24 09:08:06.524461+00:00 duration:16.061438
+[2025-10-24T09:08:06.525+0000] {logging_mixin.py:190} INFO - Task:<Task(DockerOperator): run_etl> dag:<DAG: etl_pipeline> dagrun:<DagRun etl_pipeline @ 2025-10-24 09:02:31.052227+00:00: manual__2025-10-24T09:02:31.052227+00:00, state:running, queued_at: 2025-10-24 09:02:31.063380+00:00. externally triggered: True>
+[2025-10-24T09:08:06.526+0000] {logging_mixin.py:190} INFO - Failure caused by Docker container failed: {'StatusCode': 1}
+[2025-10-24T09:08:06.526+0000] {taskinstance.py:1226} INFO - Marking task as FAILED. dag_id=etl_pipeline, task_id=run_etl, run_id=manual__2025-10-24T09:02:31.052227+00:00, execution_date=20251024T090231, start_date=20251024T090750, end_date=20251024T090806
+[2025-10-24T09:08:06.547+0000] {taskinstance.py:341} INFO - ::group::Post task execution logs
+[2025-10-24T09:08:06.548+0000] {standard_task_runner.py:124} ERROR - Failed to execute job 52 for task run_etl (Docker container failed: {'StatusCode': 1}; 3436)
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py", line 117, in _start_by_fork
+    ret = args.func(args, dag=self.dag)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/cli_config.py", line 49, in command
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/cli.py", line 116, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 483, in task_run
+    task_return_code = _run_task_by_selected_method(args, _dag, ti)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 256, in _run_task_by_selected_method
+    return _run_raw_task(args, ti)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 341, in _run_raw_task
+    return ti._run_raw_task(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/session.py", line 97, in wrapper
+    return func(*args, session=session, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3006, in _run_raw_task
+    return _run_raw_task(
+           ^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 274, in _run_raw_task
+    TaskInstance._execute_task_with_callbacks(
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3161, in _execute_task_with_callbacks
+    result = self._execute_task(context, task_orig)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3185, in _execute_task
+    return _execute_task(self, context, task_orig)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 763, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 734, in _execute_callable
+    return ExecutionCallableRunner(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 424, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/providers/docker/operators/docker.py", line 485, in execute
+    return self._run_image()
+           ^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/providers/docker/operators/docker.py", line 362, in _run_image
+    return self._run_image_with_mounts(self.mounts, add_tmp_variable=False)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/providers/docker/operators/docker.py", line 419, in _run_image_with_mounts
+    raise DockerContainerFailedException(f"Docker container failed: {result!r}", logs=log_lines)
+airflow.providers.docker.exceptions.DockerContainerFailedException: Docker container failed: {'StatusCode': 1}
+[2025-10-24T09:08:06.568+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 1
+[2025-10-24T09:08:06.580+0000] {taskinstance.py:3901} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-10-24T09:08:06.581+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

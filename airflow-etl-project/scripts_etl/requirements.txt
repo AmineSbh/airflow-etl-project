@@ -1,7 +1,6 @@
 yfinance
-pandas
+pandas==2.1.4
 lxml
-# apache-airflow
 sqlalchemy
 psycopg2-binary
 playwright
@@ -9,7 +8,7 @@ httpx
 requests
 apache-airflow-providers-docker
 
-#Test
+# Test
 pytest
 pytest-asyncio
 pytest-mock
