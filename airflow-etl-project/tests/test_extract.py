@@ -1,5 +1,22 @@
 import pytest
 from bs4 import BeautifulSoup
+import os
+import sys
+
+# --- AJOUTEZ CES LIGNES ---
+# 1. Obtenir le dossier racine du projet (qui contient 'scripts_etl' et 'tests')
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# 2. Ajouter le dossier racine au path
+sys.path.append(PROJECT_ROOT)
+
+# 3. Ajouter le dossier 'scripts_etl' au path
+# C'est ce qui corrigera "ModuleNotFoundError: No module named 'load'"
+sys.path.append(os.path.join(PROJECT_ROOT, "scripts_etl"))
+# --- FIN DE L'AJOUT ---
+
+# Maintenant, l'import suivant fonctionnera,
+# et quand extract.py importera 'load', il le trouvera.
 from scripts_etl.extract import CompanyScraper
 
 # Données de test
