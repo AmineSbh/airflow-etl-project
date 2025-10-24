@@ -40,7 +40,7 @@ SAMPLE_HTML = """
 </table>
 """
 
-
+# Fixture pour le HTML de test
 @pytest.fixture
 def scraper():
     """Fixture pour créer une instance de CompanyScraper"""
