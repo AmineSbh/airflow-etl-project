@@ -1,4 +1,4 @@
-Projet de Pipeline de Données : Suivi du CAC 40
+# Projet de Pipeline de Données : Suivi du CAC 40
 
 Ce projet est une application de pipeline de données complète, conçue pour automatiser la collecte, le stockage et la visualisation des cours de la bourse pour les entreprises du CAC 40.
 
@@ -6,7 +6,7 @@ Le pipeline s'exécute de manière entièrement automatisée grâce à Apache Ai
 
 [Image d'un schéma d'architecture de données simple]
 
-🎯 Objectif
+## 🎯 Objectif
 
 L'objectif est de créer un système robuste et automatisé qui :
 
@@ -20,7 +20,7 @@ Charge les données propres dans une base de données PostgreSQL.
 
 Affiche ces données sur un tableau de bord en temps réel.
 
-🛠️ Architecture
+## 🛠️ Architecture
 
 Ce projet est orchestré par docker-compose et se compose de trois piliers principaux :
 
@@ -50,7 +50,7 @@ Voici un schéma simple du flux de données :
 (Planifie)           (Extrait & Charge)           (Stocke)         (Lit & Affiche)
 
 
-🚀 Comment l'utiliser ?
+## 🚀 Comment l'utiliser ?
 
 Ce projet est conçu pour être lancé avec une seule commande.
 
@@ -94,7 +94,7 @@ Tableau de Bord (Streamlit) :
 
 Ouvrez votre navigateur à l'adresse : http://localhost:8501
 
-Interface Airflow :
+### Interface Airflow :
 
 Ouvrez votre navigateur à l'adresse : http://localhost:8080
 
@@ -102,7 +102,7 @@ Identifiant : airflow
 
 Mot de passe : airflow
 
-📂 Structure du projet
+## 📂 Structure du projet
 
 .
 ├── affichage/            # Contient le code du dashboard Streamlit
