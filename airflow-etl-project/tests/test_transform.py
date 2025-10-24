@@ -42,7 +42,7 @@ def test_transform_basic():
         }
     )
 
-    # Appeler la fonction
+    # Appeler la fonction à tester
     result_df = transform(test_dict)
 
     # Vérifier que le résultat correspond à ce qui est attendu
